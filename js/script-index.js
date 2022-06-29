@@ -4,10 +4,10 @@ window.onload = function() {
 	//2d context holder
 	let canvasDraw = canvas.getContext("2d");
 	
+	//-----ball style-----
 	//radius ball
 	let ballRadius = 10;
-
-	//get center position
+	//get center position of ball
 	let x = canvas.width / 2;
 	let y = canvas.height - 50;
 
@@ -16,6 +16,7 @@ window.onload = function() {
 	let dx = Math.round(Math.random() * (2 - (-2))) - 2;
 	let dy = -2;
 
+	//-------paddle style------
 	//variables for paddle
 	let paddleHeight = 10;
 	let paddleWidth = 75;
@@ -28,6 +29,25 @@ window.onload = function() {
 	//listen key press
 	document.addEventListener("keydown", keyDownHandler, false);
 	document.addEventListener("keyup", keyUpHandler, false);
+
+	//-------blocls style-------
+	//variables for blocks
+	let blockRow = 3;
+	let blockColumn = 5;
+	let blockWidth = 40;
+	let blockHeight = 20;
+	let blockPadding = 10;
+	let blockOffsetTop = 30;
+	let blockOffsetLeft = 30;
+
+	//add all block in array two-dimensional
+	let blocks = [];
+	for(let r=0; r<blockRow; r++) {
+		blocks[r] = [];
+		for(let c=0; c<blockColumn; c++) {
+			blocks[r][c] = {x: 0, y:0};
+		}
+	}
 
 	function keyDownHandler(e) {
 		//if right 'Edge use right' button or right arrow button was clicked
@@ -60,11 +80,11 @@ window.onload = function() {
 		//create ball
 		canvasDraw.beginPath();
 		//x and y are co-ordinates where ball will be
-		//20 and 0 defines radius
+		//ballRadius and 0 defines radius
 		//Math... defines start and end of angle
 		//and last parameter defines start of drawing. Flase for clockwise, but true
 		//for anti-clockwise 
-		canvasDraw.arc(x, y, 10, 0, Math.PI*2, false);
+		canvasDraw.arc(x, y, ballRadius, 0, Math.PI*2);
 		canvasDraw.fillStyle = "blue";
 		canvasDraw.fill();
 		canvasDraw.closePath();
@@ -81,6 +101,24 @@ window.onload = function() {
 		canvasDraw.closePath();	
 	}
 
+	function blockDraw() {
+		//draw blocks
+		for(let r=0; r<blockRow; ++r) {
+			for(let c=0; c<blockColumn; ++c) {
+				let blockX = (c*(blockWidth + blockPadding)) + blockOffsetTop;
+				let blockY = (r*(blockHeight + blockPadding)) + blockOffsetLeft;
+
+				blocks[r][c].x = blockX;
+				blocks[r][c].y = blockY;
+				canvasDraw.beginPath();
+				canvasDraw.rect(blockX, blockY, blockWidth, blockHeight);
+				canvasDraw.fillStyle = "red";
+				canvasDraw.fill();
+				canvasDraw.closePath();
+			}
+		}
+	}
+
 	function draw() {
 		//clear all game fild
 		canvasDraw.clearRect(0, 0, canvas.width, canvas.height);
@@ -88,6 +126,8 @@ window.onload = function() {
 		drawBall();
 		//draw paddle
 		drawPaddle();
+		//blockDraw
+		blockDraw();
 
 		//belching from wall
 		if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
@@ -96,9 +136,10 @@ window.onload = function() {
 		if(y + dy < ballRadius) {
 			dy = -dy;
 		}
-		else if(y + dy > canvas.height - ballRadius) {
+		//bleching from paddle
+		else if(y + dy > canvas.height - ballRadius - 10) {
 			if(x > paddleX && x < paddleX + paddleWidth) {
-				dy -= dy;
+				dy = -dy;
 			}
 			else {
 				alert("Game Over");
@@ -109,21 +150,13 @@ window.onload = function() {
 
 		//------paddle move------
 		//if rightPressed is ture move to right by 7px
-		if(rightPressed) {
+		if(rightPressed && paddleX < canvas.width-paddleWidth) {
 			paddleX += 7;
-			//protection for paddle from out of frame
-			if(paddleX + paddleWidth > canvas.width) {
-				paddleX = canvas.width - paddleWidth;
-			}
 		}
 		//if leftPressed is ture move to left by 7px
-		else if(leftPressed) {
+		else if(leftPressed && paddleX > 0) {
 			paddleX -= 7;
-			if(paddleX < 0) {
-				paddleX = 0;
-			}
 		}
-
 
 		//update variables for ball
 		x += dx;
