@@ -13,7 +13,11 @@ window.onload = function() {
 
 	//tiny variables for drawing efect
 	//get random number for diffrent way for ball
-	let dx = Math.round(Math.random() * (2 - (-2))) - 2;
+	let way = Math.round(Math.random() * (2 - (-2))) - 2;
+	if(way == 0) {
+		way = 1;
+	}
+	let dx = way;
 	let dy = -2;
 
 	//-------paddle style------
@@ -29,6 +33,7 @@ window.onload = function() {
 	//listen key press
 	document.addEventListener("keydown", keyDownHandler, false);
 	document.addEventListener("keyup", keyUpHandler, false);
+	document.addEventListener("mousemove", mouseMovePaddle, false);
 
 	//-------blocls style-------
 	//variables for blocks
@@ -45,7 +50,7 @@ window.onload = function() {
 	for(let r=0; r<blockRow; r++) {
 		blocks[r] = [];
 		for(let c=0; c<blockColumn; c++) {
-			blocks[r][c] = {x: 0, y:0};
+			blocks[r][c] = {x: 0, y:0, status:1};
 		}
 	}
 
@@ -75,6 +80,31 @@ window.onload = function() {
 		}
 	}
 
+	//function to move paddle with mouse
+	function mouseMovePaddle(e) {
+		let relativeX = e.clientX - canvas.offsetLeft;
+		//paddle position
+		if(relativeX > 0 && relativeX < canvas.width) {
+			paddleX = relativeX - paddleWidth / 2;
+		}
+	}
+
+	function collisionDetect() {
+		for(let r=0; r<blockRow; r++) {
+			for(let c=0; c<blockColumn; c++) {
+				//this variable storing blocks
+				let colisionBlock = blocks[r][c];
+				//if block isn't destroy change postition
+				if(colisionBlock.status == 1) {
+					if(x > colisionBlock.x && x < colisionBlock.x + blockWidth && y > colisionBlock.y && y < colisionBlock.y + blockHeight) {
+						dy = -dy;
+						//after destroy change this block status from 1 to 0
+						colisionBlock.status = 0;
+					}
+				}
+			}
+		}
+	}
 
 	function drawBall() {
 		//create ball
@@ -85,7 +115,7 @@ window.onload = function() {
 		//and last parameter defines start of drawing. Flase for clockwise, but true
 		//for anti-clockwise 
 		canvasDraw.arc(x, y, ballRadius, 0, Math.PI*2);
-		canvasDraw.fillStyle = "blue";
+		canvasDraw.fillStyle = "green";
 		canvasDraw.fill();
 		canvasDraw.closePath();
 	}
@@ -105,19 +135,31 @@ window.onload = function() {
 		//draw blocks
 		for(let r=0; r<blockRow; ++r) {
 			for(let c=0; c<blockColumn; ++c) {
-				let blockX = (c*(blockWidth + blockPadding)) + blockOffsetTop;
-				let blockY = (r*(blockHeight + blockPadding)) + blockOffsetLeft;
+				//if block isn't destroy print block
+				if(blocks[r][c].status == 1) {
+					let blockX = (c*(blockWidth + blockPadding)) + blockOffsetTop;
+					let blockY = (r*(blockHeight + blockPadding)) + blockOffsetLeft;
 
-				blocks[r][c].x = blockX;
-				blocks[r][c].y = blockY;
-				canvasDraw.beginPath();
-				canvasDraw.rect(blockX, blockY, blockWidth, blockHeight);
-				canvasDraw.fillStyle = "red";
-				canvasDraw.fill();
-				canvasDraw.closePath();
+					blocks[r][c].x = blockX;
+					blocks[r][c].y = blockY;
+					canvasDraw.beginPath();
+					canvasDraw.rect(blockX, blockY, blockWidth, blockHeight);
+					canvasDraw.fillStyle = "red";
+					canvasDraw.fill();
+					canvasDraw.closePath();
+				}
 			}
 		}
 	}
+
+	function drwaStartButton() {
+		//create start button
+		canvasDraw.beginPath();
+
+
+		canvasDraw.fill();
+		canvasDraw.closePath();
+	} 
 
 	function draw() {
 		//clear all game fild
@@ -128,6 +170,8 @@ window.onload = function() {
 		drawPaddle();
 		//blockDraw
 		blockDraw();
+		//colision
+		collisionDetect();
 
 		//belching from wall
 		if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
@@ -142,9 +186,19 @@ window.onload = function() {
 				dy = -dy;
 			}
 			else {
-				alert("Game Over");
-				document.location.reload();
+				//alert("Game Over");
+				//whitout reload game will stop
+				//document.location.reload();
+				//stop game
 				clearInterval(interval);
+				//if button is click restart game
+				document.addEventListener("keydown", function(e) {
+					if(e.key == "Enter") {
+						document.location.reload();
+						clearInterval(interval);
+					}
+				});
+				//clearInterval(interval);
 			}
  		}
 
