@@ -3,7 +3,7 @@ window.onload = function() {
 	let canvas = document.querySelector("#canvas");
 	//2d context holder
 	let canvasDraw = canvas.getContext("2d");
-	
+
 	//-----ball style-----
 	//radius ball
 	let ballRadius = 10;
@@ -42,7 +42,7 @@ window.onload = function() {
 	let blockWidth = 40;
 	let blockHeight = 20;
 	let blockPadding = 10;
-	let blockOffsetTop = 30;
+	let blockOffsetTop = 50;
 	let blockOffsetLeft = 30;
 
 	//add all block in array two-dimensional
@@ -53,6 +53,10 @@ window.onload = function() {
 			blocks[r][c] = {x: 0, y:0, status:1};
 		}
 	}
+
+	//-------score-----
+	let score = 0;
+	let lives = 2;
 
 	function keyDownHandler(e) {
 		//if right 'Edge use right' button or right arrow button was clicked
@@ -100,6 +104,7 @@ window.onload = function() {
 						dy = -dy;
 						//after destroy change this block status from 1 to 0
 						colisionBlock.status = 0;
+						score++;
 					}
 				}
 			}
@@ -115,7 +120,7 @@ window.onload = function() {
 		//and last parameter defines start of drawing. Flase for clockwise, but true
 		//for anti-clockwise 
 		canvasDraw.arc(x, y, ballRadius, 0, Math.PI*2);
-		canvasDraw.fillStyle = "green";
+		canvasDraw.fillStyle = "blue";
 		canvasDraw.fill();
 		canvasDraw.closePath();
 	}
@@ -137,8 +142,8 @@ window.onload = function() {
 			for(let c=0; c<blockColumn; ++c) {
 				//if block isn't destroy print block
 				if(blocks[r][c].status == 1) {
-					let blockX = (c*(blockWidth + blockPadding)) + blockOffsetTop;
-					let blockY = (r*(blockHeight + blockPadding)) + blockOffsetLeft;
+					let blockX = (c*(blockWidth + blockPadding)) + blockOffsetLeft;
+					let blockY = (r*(blockHeight + blockPadding)) + blockOffsetTop;
 
 					blocks[r][c].x = blockX;
 					blocks[r][c].y = blockY;
@@ -152,14 +157,30 @@ window.onload = function() {
 		}
 	}
 
-	function drwaStartButton() {
-		//create start button
-		canvasDraw.beginPath();
+	function drawLabel(text, x, y) {
+		//create start label
+		canvasDraw.textAlign = 'center';
+		canvasDraw.fillStyle = "blue";
+		canvasDraw.font = "bold 16px Arial";
+		canvasDraw.fillText(text, x, y);
+	}
 
+	function drawPointsLabel(text, x, y) {
+		//create score label
+		canvasDraw.textAlign = 'center';
+		canvasDraw.fillStyle = "blue";
+		canvasDraw.font = "bold 16px Arial";
+		canvasDraw.fillText(text, x, y);
+	}
 
-		canvasDraw.fill();
-		canvasDraw.closePath();
-	} 
+	function enterKeyListener() {
+		document.addEventListener("keydown", function(e) {
+			if(e.key == "Enter") {
+				document.location.reload();
+				clearInterval(interval);
+			}
+		});
+	}
 
 	function draw() {
 		//clear all game fild
@@ -172,6 +193,9 @@ window.onload = function() {
 		blockDraw();
 		//colision
 		collisionDetect();
+		//score label
+		drawPointsLabel("Score: "+score, 40, 20);
+		drawPointsLabel("Lives: "+lives, 260, 20);
 
 		//belching from wall
 		if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
@@ -186,20 +210,46 @@ window.onload = function() {
 				dy = -dy;
 			}
 			else {
-				//alert("Game Over");
-				//whitout reload game will stop
-				//document.location.reload();
-				//stop game
-				clearInterval(interval);
-				//if button is click restart game
-				document.addEventListener("keydown", function(e) {
-					if(e.key == "Enter") {
-						document.location.reload();
-						clearInterval(interval);
-					}
-				});
-				//clearInterval(interval);
+				//will subtract one point after die
+				lives--;
+				//if you have 0 lives do code...
+				if(lives == 0) {
+					//stop game
+					clearInterval(interval);
+
+					//if button is click restart game
+					drawLabel("Game over", 150, 200);
+					drawLabel("Click ENTER to restart game", 150, 220);
+		 			//listener function wich wait for press enter
+					enterKeyListener();
+					//change ball to default position
+				    x = canvas.width / 2;
+				    y = canvas.height - 50;
+				    dx = way;
+				    dy = -2;
+				    paddleX = (canvas.width - paddleWidth) / 2;
+				}
+				else {
+					//change ball to default position
+				    x = canvas.width / 2;
+				    y = canvas.height - 50;
+				    dx = way;
+				    dy = -2;
+				    paddleX = (canvas.width - paddleWidth) / 2;
+				}
+
 			}
+ 		}
+
+ 		if(score == (blockRow*blockColumn)) {
+ 			//clear interval (stop game)
+ 			clearInterval(interval);
+ 			//draw labels
+ 			drawLabel("You win", 150, 200);
+ 			drawLabel("Click ENTER to reset", 150, 220);
+ 			//listener function wich wait for press enter
+			enterKeyListener();
+
  		}
 
 		//------paddle move------
@@ -217,6 +267,15 @@ window.onload = function() {
 		y += dy;
 
 	}
-
-	let interval = setInterval(draw, 10);
+	//variable with interval
+	let interval;
+	//draw label
+	drawLabel("Click ENTER to start game", 150, 200);
+	//after press eneter button start game
+	document.addEventListener("keydown", function(e) {
+		if(e.key == "Enter") {
+			interval = setInterval(draw, 10);
+		}
+	});
+	
 }
