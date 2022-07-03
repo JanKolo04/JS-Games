@@ -3,5 +3,6 @@ Learing how to create game in JS
 
 
 ## To do
-- [ ] finish current game
+- [x] finish current game
+- [ ] add some style into brakedown game
 - [ ] create snake 
