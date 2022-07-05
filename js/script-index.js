@@ -57,6 +57,7 @@ window.onload = function() {
 	//-------score-----
 	let score = 0;
 	let lives = 2;
+	let first = 0;
 
 	function keyDownHandler(e) {
 		//if right 'Edge use right' button or right arrow button was clicked
@@ -120,8 +121,10 @@ window.onload = function() {
 		//and last parameter defines start of drawing. Flase for clockwise, but true
 		//for anti-clockwise 
 		canvasDraw.arc(x, y, ballRadius, 0, Math.PI*2);
-		canvasDraw.fillStyle = "blue";
+		canvasDraw.fillStyle = "#00ff00";
+		canvasDraw.strokeStyle = 'black';
 		canvasDraw.fill();
+		canvasDraw.stroke();
 		canvasDraw.closePath();
 	}
 
@@ -131,8 +134,10 @@ window.onload = function() {
 		//paddleX and canvas.height - paddleHeight defines co-ordinates
 		//paddleWidht and paddleHeight defines height and width of paddle
 		canvasDraw.rect(paddleX, canvas.height - paddleHeight - 10, paddleWidth, paddleHeight);
-		canvasDraw.fillStyle = "blue";
+		canvasDraw.fillStyle = "#00ff00";
+		canvasDraw.strokeStyle = 'black';
 		canvasDraw.fill();
+		canvasDraw.stroke();
 		canvasDraw.closePath();	
 	}
 
@@ -150,7 +155,9 @@ window.onload = function() {
 					canvasDraw.beginPath();
 					canvasDraw.rect(blockX, blockY, blockWidth, blockHeight);
 					canvasDraw.fillStyle = "red";
+					canvasDraw.strokeStyle = 'black';
 					canvasDraw.fill();
+					canvasDraw.stroke();
 					canvasDraw.closePath();
 				}
 			}
@@ -160,15 +167,7 @@ window.onload = function() {
 	function drawLabel(text, x, y) {
 		//create start label
 		canvasDraw.textAlign = 'center';
-		canvasDraw.fillStyle = "blue";
-		canvasDraw.font = "bold 16px Arial";
-		canvasDraw.fillText(text, x, y);
-	}
-
-	function drawPointsLabel(text, x, y) {
-		//create score label
-		canvasDraw.textAlign = 'center';
-		canvasDraw.fillStyle = "blue";
+		canvasDraw.fillStyle = "white";
 		canvasDraw.font = "bold 16px Arial";
 		canvasDraw.fillText(text, x, y);
 	}
@@ -194,8 +193,8 @@ window.onload = function() {
 		//colision
 		collisionDetect();
 		//score label
-		drawPointsLabel("Score: "+score, 40, 20);
-		drawPointsLabel("Lives: "+lives, 260, 20);
+		drawLabel("Score: "+score, 40, 20);
+		drawLabel("Lives: "+lives, 260, 20);
 
 		//belching from wall
 		if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
@@ -273,8 +272,10 @@ window.onload = function() {
 	drawLabel("Click ENTER to start game", 150, 200);
 	//after press eneter button start game
 	document.addEventListener("keydown", function(e) {
-		if(e.key == "Enter") {
+		//security with variable to click only one time
+		if(e.key == "Enter" && first == 0) {
 			interval = setInterval(draw, 10);
+			first = 1;
 		}
 	});
 	
