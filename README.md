@@ -6,4 +6,4 @@ Learing how to create game in JS
 - [x] finish current game
 - [x] add some style into brakedown game
 - [ ] create hangman
-- [ ] create new README 
+- [ ] create new README for all games
