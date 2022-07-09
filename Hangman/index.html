@@ -13,7 +13,24 @@
 	<canvas id="canvas" width="300" height="400"></canvas>
 	---->
 
-	<div id="divWordHolder"></div>
+	<h2 style="text-align: center; margin-bottom: 20px;">Guess word!</h2>
+
+	<div id="divWordHolder">
+		<div id="charHolder"></div>
+		<div id="fieldHolder"></div>
+	</div>
+
+	<div id="inputsHolder">
+		<p><strong>Enter char in lower case!</strong></p>
+		<input type="text" name="word" id="char" maxlength="1">
+		<button id="submit">Submit</button>
+	</div>
+
+	<div id="tableHolder">
+		<table border="1">
+			<caption><strong>Wrong chars table</strong></caption>
+		</table>
+	</div>
 
 </body>
 </html>

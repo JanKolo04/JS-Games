@@ -6,3 +6,74 @@ canvas {
 }
 */
 
+#divWordHolder {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-top: 20px;
+}
+
+#charHolder {
+	width: auto;
+	height: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+}
+
+#fieldHolder {
+	width: auto;
+	height: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+}
+
+.charDiv {
+	width: 40px;
+	height: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding: 5px 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: black;
+}
+
+.charField {
+	width: 40px;
+	height: 10px;
+	border: none;
+	border-radius: 6px;
+	margin-left: 10px;
+	margin-right: 10px;
+	background-color: black;
+}
+
+#inputsHolder {
+	margin-top: 20px;
+}
+
+#tableHolder {
+	margin-top: 30px;
+}
+
+table {
+	width: 150px;
+}
+
+td {
+	text-align: center;
+}
+
+
+
+
+
+
+
+
