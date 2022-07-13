@@ -2,8 +2,10 @@
 Learing how to create game in JS
 
 
-## To do
-- [x] finish current game
-- [x] add some style into brakedown game
-- [ ] create hangman
-- [ ] create new README for all games
+## To do breakout 2d
+- [x] add style for game
+- [x] create README
+
+## To do hangamn
+- [ ] add start menu with select category
+- [ ] add style
