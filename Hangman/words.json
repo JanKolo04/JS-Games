@@ -1,5 +1,6 @@
 {
-	"words": {
+	"names": {
+		"0": "names",
 		"1": "Jan",
 		"2": "Ola",
 		"3": "Piotr",
@@ -10,5 +11,17 @@
 		"8": "Marylka",
 		"9": "Zdzisław",
 		"10": "Daria"
+	},
+	"fruits": {
+		"1": "Apple",
+		"2": "Plum",
+		"3": "Tomato",
+		"4": "Potato",
+		"5": "Orange",
+		"6": "Grape",
+		"7": "Banana",
+		"8": "Mango",
+		"9": "Cherry",
+		"10": "Lemon"
 	}
 }

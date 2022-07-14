@@ -1,26 +1,3 @@
-/*
-window.onload = function() {
-	//get canvas field
-	let canvas = document.querySelector("#canvas");
-	let canvasDraw = canvas.getContext("2d");
-
-
-	function drawFiled() {
-		$.getJSON("../words.json", function(data) {
-			//get number from 1 to 10
-			//this number is a number of word from JSON file
-			let randomWord = Math.round(Math.random() * (1 - 10 + 1)) + 1;
-			//count all chars in word
-			for(let i=0; i<data.words.randomWord; i++) {
-				canvasDraw.beginPath();
-				canvasDraw.rect("");
-			}
-		});
-	}
-
-}
-*/
-
 window.onload = function() {
 	//divs
 	let divWordHolder = document.querySelector("#fieldHolder");
@@ -29,7 +6,6 @@ window.onload = function() {
 	let charArray = [];
 	//correct answer var
 	let correctAnswer = 0;
-
 	
 	//listener function
 	let button = document.querySelector("#submit");
@@ -38,14 +14,14 @@ window.onload = function() {
 		win();
 	}
 
-	function drawWordFiled() {
+	function drawWordFiled(category) {
 		$.getJSON("words.json", function(data) {
 			//get number from 1 to 10
 			//this number is a number of word from JSON file
 			let randomWord = Math.round(Math.random() * (0 + 9)) + 1;
 
 			//count all chars in word
-			for(let i=0; i<data.words[randomWord].length; i++) {
+			for(let i=0; i<data.document.querySelector("#selectCategory").value[randomWord].length; i++) {
 				//create char div
 				let charDiv = document.createElement("div");
 				charDiv.className = "charDiv";
@@ -61,7 +37,7 @@ window.onload = function() {
 				divWordHolder.appendChild(charFieldHolder);
 
 				//append data word into global variable 
-				charArray[i] = data.words[randomWord][i].toLowerCase();
+				charArray[i] = data.document.querySelector("#selectCategory").value[randomWord][i].toLowerCase();
 			}
 		});
 	}
@@ -98,7 +74,6 @@ window.onload = function() {
 
 			//if you picked wrong char show alert
 			if(checker == 0) {
-				alert("You choice wrong char");
 				//table
 				let table = document.querySelector("table");
 
@@ -124,6 +99,15 @@ window.onload = function() {
 		}
 	}
 
-	drawWordFiled();
+	document.querySelector("#categoryButton").addEventListener("click", function() {
+		//select
+		let select = document.querySelector("#selectCategory").value;
+		
+		//display none category window
+		document.querySelector("#startHolder").style = "display: none;";
+		//run function with draw fileds
+		drawWordFiled(select);
+	});
+
 
 }
