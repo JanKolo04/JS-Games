@@ -21,7 +21,7 @@ window.onload = function() {
 			let randomWord = Math.round(Math.random() * (0 + 9)) + 1;
 
 			//count all chars in word
-			for(let i=0; i<data.document.querySelector("#selectCategory").value[randomWord].length; i++) {
+			for(let i=0; i<data[category][randomWord].length; i++) {
 				//create char div
 				let charDiv = document.createElement("div");
 				charDiv.className = "charDiv";
@@ -37,7 +37,7 @@ window.onload = function() {
 				divWordHolder.appendChild(charFieldHolder);
 
 				//append data word into global variable 
-				charArray[i] = data.document.querySelector("#selectCategory").value[randomWord][i].toLowerCase();
+				charArray[i] = data[category][randomWord][i].toLowerCase();
 			}
 		});
 	}
@@ -101,13 +101,13 @@ window.onload = function() {
 
 	document.querySelector("#categoryButton").addEventListener("click", function() {
 		//select
-		let select = document.querySelector("#selectCategory").value;
+		let selectedCategory = document.querySelector("#selectCategory").value;
 		
 		//display none category window
 		document.querySelector("#startHolder").style = "display: none;";
+		document.querySelector("#playHolder").style = "display: flex;";
 		//run function with draw fileds
-		drawWordFiled(select);
+		drawWordFiled(selectedCategory);
 	});
-
 
 }

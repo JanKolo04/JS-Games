@@ -1,5 +1,5 @@
 {
-	"names": {
+	"Names": {
 		"0": "names",
 		"1": "Jan",
 		"2": "Ola",
@@ -12,7 +12,7 @@
 		"9": "Zdzisław",
 		"10": "Daria"
 	},
-	"fruits": {
+	"Fruits": {
 		"1": "Apple",
 		"2": "Plum",
 		"3": "Tomato",
