@@ -9,8 +9,3 @@ Learing how to create game in JS
 ## To do hangamn
 - [ ] add start menu with select category
 - [ ] add style
-
-
-
-
-
