@@ -57,11 +57,21 @@ button {
 	display: none;
 }
 
+#livesHolder {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+}
+
+#lives {
+	margin-right: 20px;
+}
+
 #mainText {
 	text-align: center;
 	margin: 0px;
 	margin-bottom: 20px;
-	margin-top: 50px;
+	margin-top: 20px;
 }
 
 #divWordHolder {

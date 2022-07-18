@@ -6,6 +6,10 @@ window.onload = function() {
 	let charArray = [];
 	//correct answer var
 	let correctAnswer = 0;
+	//lives answer
+	let lives = 5;
+	//incorrect
+	let incorrect = 0;
 	
 	//listener function
 	let button = document.querySelector("#submit");
@@ -74,6 +78,13 @@ window.onload = function() {
 
 			//if you picked wrong char show alert
 			if(checker == 0) {
+				//update incorrect
+				incorrect++;
+				//update lives variable
+				lives--;
+				//set innerHTML
+				document.querySelector("#lives").innerHTML = "Lives: "+lives;
+
 				//table
 				let table = document.querySelector("table");
 
@@ -82,10 +93,21 @@ window.onload = function() {
 				//append into table
 				table.appendChild(record);
 
+				//create data number
+				let dataNumber = document.createElement("td");
+				dataNumber.innerHTML = "<strong>"+incorrect+"</strong>";
+				record.appendChild(dataNumber);
+
 				//create data char
 				let dataChar = document.createElement("td");
 				dataChar.innerHTML = charFromInput;
 				record.appendChild(dataChar);
+			}
+			//if lives equals 0 game over
+			if(lives == 0) {
+				alert("You lose");
+				//reload page
+				document.location.reload();
 			}
 		}
 		//clear input value
