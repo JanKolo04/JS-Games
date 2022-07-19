@@ -7,5 +7,6 @@ Learing how to create game in JS
 - [x] create README
 
 ## To do hangamn
-- [ ] add start menu with select category
-- [ ] add style
+- [x] add start menu with select category
+- [x] add style
+- [ ] create README
