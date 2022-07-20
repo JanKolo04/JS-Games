@@ -10,3 +10,6 @@ Learing how to create game in JS
 - [x] add start menu with select category
 - [x] add style
 - [ ] create README
+
+
+
