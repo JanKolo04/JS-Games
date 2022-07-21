@@ -2,6 +2,9 @@
 Learing how to create game in JS
 
 
+## To do
+- [ ] create list with links in README
+
 ## To do breakout 2d
 - [x] add style for game
 - [x] create README
