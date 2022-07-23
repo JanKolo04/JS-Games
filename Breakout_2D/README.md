@@ -6,6 +6,12 @@
 # Breakout_2D
 In this game you moving a paddle wich bounces the ball. Third element of game are blocks wich are to break. If ball hit block, block will be destroy. When you dont bounce ball you are die, but you have 2 lives so when you lose all lives game will over.
 
+## Table of content
+- [Instalation](#instalation)
+- [Piece of code](#piece-of-code)
+- [Photos](#photos)
+- [License](#license)
+
 ## Instalation
 1. Clone repository
 
