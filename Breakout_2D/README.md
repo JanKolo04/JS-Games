@@ -13,14 +13,14 @@ In this game you moving a paddle wich bounces the ball. Third element of game ar
 - [License](#license)
 
 ## Instalation
-1. Clone repository
+1. Clone repository</br>
+`git clone https://github.com/JanKolo04/JS-Games.git`
 
-    `git clone https://github.com/JanKolo04/JS-Games.git`
+2. Go to the project</br>
+`cd Breakout_2D`
 
-2. Go to the project
-
-    `cd Breakout_2D`
-
+3. And last step is open file with game in terminal</br>
+`open index.html`
 
 ## Piece of code
 
